@@ -18,7 +18,7 @@ const getStats = async (playerName, season) => {
 
     const data = await page.evaluate((season) => {
         const ths = Array.from(document.querySelectorAll('table#per_game thead tr th')); 
-        const header = ths.map(th => th.innerText);
+         const header = ths.map(th => th.innerText.replace('2', 'Two').replace('3', 'Three').replace('%', 'Pct')); // replace '3' with 'Three' and '%' with 'Pct'
         const rows = Array.from(document.querySelectorAll('table#per_game tbody tr:not(.thead)'));
 
         const stats = rows.map(row => {
@@ -46,5 +46,6 @@ const getStats = async (playerName, season) => {
 }
 
 getStats('Nikola Jokic', '2022-23')
-    .then(console.log)
-    .catch(console.error);
+    .then(data => console.log(data))
+    .catch(err => console.log(err))
+
